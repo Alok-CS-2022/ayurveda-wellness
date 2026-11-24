@@ -1,26 +1,160 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Design tokens: Himalayan Ayurvedic Wellness
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  /* Brand palette */
+  --forest: #233d32;
+  --ivory: #f7f3ea;
+  --gold: #b79365;
+  --sage: #dce3d6;
+  --charcoal: #302d29;
+
+  /* Semantic roles */
+  --background: var(--ivory);
+  --foreground: var(--charcoal);
+  --surface: #fcfaf5; /* cards, raised panels */
+  --primary: var(--forest);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--sage);
+  --secondary-foreground: var(--forest);
+  --accent: var(--gold); /* decorative: rules, icons, large display */
+  --accent-strong: #7a5c34; /* gold for text on ivory (5.5:1) */
+  --muted-foreground: #5e5a53; /* secondary text on ivory (6:1) */
+  --border: #d9d2c2;
+  --ring: var(--forest);
+
+  /* Font stacks. Fontsource registers these family names via layout.tsx */
+  --font-heading-stack: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+  --font-body-stack: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Motion */
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-base: 220ms;
 }
 
+/* Tokens that reference other variables */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-muted: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-body-stack);
+  --font-serif: var(--font-heading-stack);
+  --font-heading: var(--font-heading-stack);
+  --font-body: var(--font-body-stack);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Fluid type scale: usable as text-display, text-headline, text-title */
+@theme {
+  --text-display: clamp(2.75rem, 1.9rem + 4vw, 5.25rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-headline: clamp(2rem, 1.5rem + 2.4vw, 3.5rem);
+  --text-headline--line-height: 1.08;
+  --text-headline--letter-spacing: -0.015em;
+
+  --text-title: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);
+  --text-title--line-height: 1.2;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body-stack);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading-stack);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--primary);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a,
+  button {
+    transition-property: color, background-color, border-color, opacity, box-shadow;
+    transition-duration: var(--duration-base);
+    transition-timing-function: var(--ease-calm);
+  }
+
+  ::selection {
+    background-color: var(--secondary);
+    color: var(--primary);
+  }
+
+  /* Focus: keyboard users only, clearly visible on ivory, sage and green */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .bg-primary :focus-visible,
+  .bg-primary:focus-visible {
+    outline-color: var(--ivory);
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
