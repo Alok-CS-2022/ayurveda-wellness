@@ -8,17 +8,22 @@ import { ArrowRight, Pause, Play } from "lucide-react";
 type Treatment = {
   readonly name: string;
   readonly slug: string;
-  readonly duration: string;
+  readonly price: string;
 };
 
-// Prototype examples only. Not confirmed business offerings.
+// Services and prices taken from the client's supplied price list (NPR).
+// Reconfirm with the client before publication.
 const treatments: readonly Treatment[] = [
-  { name: "Ayurvedic Massage", slug: "ayurvedic-massage", duration: "60 min" },
-  { name: "Deep Tissue Massage", slug: "deep-tissue-massage", duration: "60 min" },
-  { name: "Swedish Massage", slug: "swedish-massage", duration: "60 min" },
-  { name: "Hot Stone Therapy", slug: "hot-stone-therapy", duration: "75 min" },
-  { name: "Shirodhara", slug: "shirodhara", duration: "45 min" },
-  { name: "Herbal Hair & Scalp Care", slug: "herbal-hair-scalp-care", duration: "45 min" },
+  { name: "Ayurvedic Massage", slug: "ayurvedic-massage", price: "Rs. 1,200" },
+  {
+    name: "Ayurvedic Massage + Herbal Steam",
+    slug: "ayurvedic-massage-herbal-steam",
+    price: "Rs. 1,500",
+  },
+  { name: "Potli Massage Therapy", slug: "potli-massage-therapy", price: "Rs. 2,000" },
+  { name: "Ayurvedic Facial", slug: "ayurvedic-facial", price: "Rs. 1,500" },
+  { name: "Acupuncture", slug: "acupuncture", price: "Rs. 500" },
+  { name: "Detox Foot Spa", slug: "detox-foot-spa", price: "Rs. 300" },
 ];
 
 const focusRing =
@@ -109,8 +114,8 @@ export default function FeaturedTreatments() {
               Choose a treatment to learn more about what it involves.
             </p>
             <p className="mt-3 font-body text-sm opacity-80">
-              Prototype content: services and durations are examples, not
-              confirmed offerings.
+              Prices are taken from the client&apos;s supplied list and should be
+              reconfirmed before publication.
             </p>
 
             <ul className="mt-10 border-t border-border">
@@ -123,10 +128,9 @@ export default function FeaturedTreatments() {
                     <span className="font-heading text-2xl font-semibold text-primary transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 sm:text-3xl">
                       {t.name}
                     </span>
-                    <span className="flex items-center gap-4 font-body text-sm">
-                      <span>{t.duration}</span>
-                      <span aria-hidden="true" className="h-3 w-px bg-accent" />
-                      <span className="opacity-80">Price on inquiry</span>
+                    <span className="font-body text-sm font-semibold tracking-wide text-primary">
+                      <span className="sr-only">Price: </span>
+                      {t.price}
                     </span>
                   </Link>
                 </li>

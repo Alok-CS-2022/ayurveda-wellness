@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+const whatsappUrl = getWhatsAppUrl();
 
 const primaryCta =
   "inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 font-body text-sm font-semibold tracking-wide text-foreground transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-background";
@@ -84,12 +86,28 @@ export default function Hero() {
             <Link href="/services/therapies" className={primaryCta}>
               Explore Our Therapies
             </Link>
-            <Link href="/booking" className={secondaryCta}>
-              Book an Experience
-            </Link>
+            {whatsappUrl ? (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={secondaryCta}
+                aria-label="Inquire on WhatsApp, opens in a new tab"
+              >
+                Inquire on WhatsApp
+              </a>
+            ) : (
+              <span
+                className={`${secondaryCta} cursor-not-allowed opacity-50`}
+                aria-label="WhatsApp inquiries are currently unavailable"
+              >
+                WhatsApp Unavailable
+              </span>
+            )}
           </motion.div>
         </div>
       </div>
     </section>
   );
 }
+

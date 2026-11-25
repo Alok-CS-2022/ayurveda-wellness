@@ -3,33 +3,45 @@ import { ArrowRight, Leaf } from "lucide-react";
 
 type SpaPackage = {
   readonly name: string;
+  readonly variant?: string;
   readonly slug: string;
+  readonly kind: "Package" | "Combination";
   readonly description: string;
-  readonly includes: readonly string[];
+  readonly duration: string;
+  readonly price: string;
 };
 
-// Provisional examples only. Subject to client confirmation.
+// Entries and prices taken from the client's supplied price list (NPR).
+// Reconfirm with the client before publication.
 const packages: readonly SpaPackage[] = [
   {
-    name: "Veda Vibe",
-    slug: "veda-vibe",
+    name: "Shiro-Dhara",
+    variant: "7-Day Package",
+    slug: "shiro-dhara-seven-day",
+    kind: "Package",
     description:
-      "A gentle introduction to Ayurvedic-inspired care, designed for a calm, restorative visit.",
-    includes: ["Ayurvedic Massage", "Herbal Hair & Scalp Care"],
+      "Shiro-Dhara offered as a seven-day package. Please enquire for scheduling and for what each visit involves.",
+    duration: "7 days",
+    price: "Rs. 8,500",
   },
   {
-    name: "Nirvana Rituals",
-    slug: "nirvana-rituals",
+    name: "Matra Basti",
+    variant: "One Week",
+    slug: "matra-basti-one-week",
+    kind: "Package",
     description:
-      "A longer, unhurried experience that pairs warm oils and stones with quiet time to rest.",
-    includes: ["Hot Stone Therapy", "Shirodhara", "Ayurvedic Massage"],
+      "Matra Basti offered as a one-week plan. Please enquire for details on how the course is arranged.",
+    duration: "One week",
+    price: "Rs. 7,500",
   },
   {
-    name: "Dhara Vibe",
-    slug: "dhara-vibe",
+    name: "Ayurvedic Massage + Sauna/Steam",
+    slug: "ayurvedic-massage-sauna-steam",
+    kind: "Combination",
     description:
-      "A soothing combination centred on slow, rhythmic therapies and a sense of ease.",
-    includes: ["Shirodhara", "Swedish Massage"],
+      "Ayurvedic massage paired with sauna or steam, offered as a single combination treatment rather than a multi-day plan.",
+    duration: "Not specified",
+    price: "Rs. 1,700",
   },
 ];
 
@@ -54,16 +66,15 @@ export default function SpaPackages() {
             id="spa-packages-heading"
             className="mt-4 font-heading text-4xl font-medium leading-tight text-primary sm:text-5xl"
           >
-            Spa Packages
+            Treatment Plans &amp; Combinations
           </h2>
           <p className="mt-5 max-w-xl font-body text-base leading-relaxed">
-            Explore curated wellness experiences that bring together massage and
-            Ayurvedic-inspired therapies, each shaped around a single, unhurried
-            visit.
+            Longer courses of Ayurvedic care and combined treatments from our
+            price list, for those who would like to go beyond a single session.
           </p>
           <p className="mt-3 font-body text-sm opacity-80">
-            Illustrative content: package names, inclusions, and descriptions are
-            provisional and subject to client confirmation.
+            Prices come from the client-supplied list and require reconfirmation
+            before publication.
           </p>
         </div>
 
@@ -83,58 +94,46 @@ export default function SpaPackages() {
                     className="pointer-events-none absolute right-4 top-4 h-14 w-14 rotate-12 text-accent/30 transition-transform duration-500 group-hover:rotate-[18deg] motion-reduce:transition-none motion-reduce:group-hover:rotate-12"
                   />
 
-                  {/* Eyebrow: numeral + rule */}
+                  {/* Eyebrow: numeral + rule + kind */}
                   <p className="flex items-center gap-3 font-body text-xs font-semibold uppercase tracking-[0.24em] text-accent">
                     <span aria-hidden="true">{CARD_NUMBERS[index] ?? index + 1}</span>
                     <span aria-hidden="true" className="h-px w-8 bg-accent" />
-                    <span className="text-primary/80">Package</span>
+                    <span className="text-primary/80">{pkg.kind}</span>
                   </p>
 
-                  <h3 className="mt-6 pr-12 font-heading text-4xl font-semibold leading-none text-primary sm:text-[2.75rem]">
+                  <h3 className="mt-6 pr-12 font-heading text-3xl font-semibold leading-tight text-primary sm:text-4xl">
                     {pkg.name}
                   </h3>
+                  {pkg.variant ? (
+                    <p className="mt-2 font-body text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
+                      {pkg.variant}
+                    </p>
+                  ) : null}
                   <p className="mt-4 font-body text-[0.9375rem] leading-relaxed">
                     {pkg.description}
                   </p>
 
-                  {/* Inclusions */}
-                  <div className="mt-7">
-                    <p className="flex items-center gap-3 font-body text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                      Sample inclusions
-                      <span aria-hidden="true" className="h-px flex-1 bg-border" />
-                    </p>
-                    <ul className="mt-4 space-y-2 font-body text-sm">
-                      {pkg.includes.map((item) => (
-                        <li key={item} className="flex items-center gap-3">
-                          <span
-                            aria-hidden="true"
-                            className="h-1.5 w-1.5 rotate-45 border border-accent"
-                          />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Pushed to the bottom so details and CTA align across cards. */}
+                  {/* Pushed to the bottom so price, duration and CTA align across cards. */}
                   <div className="mt-auto pt-8">
-                    <dl className="grid grid-cols-2 gap-4 border-t border-border pt-5 font-body text-sm">
+                    <dl className="grid grid-cols-2 items-end gap-4 border-t border-border pt-5 font-body text-sm">
+                      <div>
+                        <dt className="text-xs uppercase tracking-[0.15em] opacity-80">
+                          Price (NPR)
+                        </dt>
+                        <dd className="mt-1 font-heading text-3xl font-semibold leading-none text-primary">
+                          {pkg.price}
+                        </dd>
+                      </div>
                       <div>
                         <dt className="text-xs uppercase tracking-[0.15em] opacity-80">
                           Duration
                         </dt>
-                        <dd className="mt-1 font-medium">To be confirmed</dd>
-                      </div>
-                      <div>
-                        <dt className="text-xs uppercase tracking-[0.15em] opacity-80">
-                          Price
-                        </dt>
-                        <dd className="mt-1 font-medium">On inquiry</dd>
+                        <dd className="mt-1 font-medium">{pkg.duration}</dd>
                       </div>
                     </dl>
 
                     <span className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-8 font-body text-sm font-semibold tracking-wide text-background transition-opacity group-hover:opacity-90">
-                      Explore Package
+                      Explore {pkg.kind}
                       <ArrowRight
                         aria-hidden="true"
                         className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"

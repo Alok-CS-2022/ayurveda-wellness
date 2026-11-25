@@ -38,10 +38,8 @@ export const servicesDropdown: NavDropdown = {
   label: "Services",
   ariaLabel: "Services menu",
   items: [
-    { type: "link", label: "Featured Services", href: "/services/featured" },
     { type: "link", label: "Therapies", href: "/services/therapies" },
     { type: "link", label: "Packages", href: "/services/packages" },
-    { type: "link", label: "Products", href: "/products" },
   ],
 };
 
@@ -77,11 +75,7 @@ export const navActions: readonly NavAction[] = [
   },
 ];
 
-/** Primary call to action, styled distinctly from regular links. */
-export const bookNowCta: NavCta = {
-  type: "link",
-  label: "Book Now",
-  href: "/booking",
-  ariaLabel: "Book an experience",
-  variant: "primary",
-};
+
+
+
+
