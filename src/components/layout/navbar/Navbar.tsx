@@ -1,9 +1,10 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Leaf, Menu, Search, MessageCircle, X } from "lucide-react";
+import { Menu, Search, MessageCircle, X } from "lucide-react";
 import DesktopNav from "./DesktopNav";
 import { navActions, servicesDropdown } from "./navData";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
@@ -71,10 +72,12 @@ export default function Navbar() {
           onClick={() => setMenuOpen(false)}
           className="inline-flex min-w-0 shrink-0 items-center gap-2.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         >
-          <Leaf
-            aria-hidden="true"
-            className="h-[1.125rem] w-[1.125rem] shrink-0 text-accent"
-            strokeWidth={1.5}
+          <Image
+            src="/images/kanchan-logo.png"
+            alt=""
+            width={44}
+            height={44}
+            className="h-10 w-10 shrink-0 rounded-full bg-background object-contain lg:h-11 lg:w-11"
           />
           <span className="flex flex-col whitespace-nowrap leading-none">
             <span className="font-heading text-xl font-semibold tracking-[0.12em] text-primary sm:text-[1.5rem]">
@@ -197,3 +200,4 @@ export default function Navbar() {
     </header>
   );
 }
+
